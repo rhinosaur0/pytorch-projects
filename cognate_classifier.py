@@ -66,16 +66,16 @@ embed_size = 16
 hidden_size = 32
 weight_decay_val = 0.00001
 
-model = CognateClassifier(vocab_size, embed_size, hidden_size, max_len)
+model_0 = CognateClassifier(vocab_size, embed_size, hidden_size, max_len)
 loss_function = nn.BCELoss()
 optimizer = optim.Adam(model.parameters(), lr = 0.001, weight_decay = weight_decay_val)
 
 for epoch in range(30):
   for word1, word2, label in dataLoader:
-    model.zero_grad()
+    model_0.zero_grad()
     optimizer.zero_grad()
 
-    output = model(word1, word2).squeeze(dim = 1)
+    output = model_0(word1, word2).squeeze(dim = 1)
     loss = loss_function(output, label)
 
 
@@ -87,12 +87,12 @@ test_X_tensor = [(torch.tensor(word_to_idx(word1, max_len)), torch.tensor(word_t
 
 model.eval()
 
-with torch.no_grad():
+with torch.inference_mode():
   for w1, w2 in word_pairs:
-    prediction = model(torch.tensor(word_to_idx(w1, max_len)).unsqueeze(0), torch.tensor(word_to_idx(w1, max_len)).unsqueeze(0))
+    prediction = model_0(torch.tensor(word_to_idx(w1, max_len)).unsqueeze(0), torch.tensor(word_to_idx(w1, max_len)).unsqueeze(0))
     print(f"Trained prediction for '{word_pairs.pop(0)}': {prediction.item():.4f}")
 
-with torch.no_grad():
+with torch.inference_mode():
   for word1, word2 in test_X_tensor:
-    prediction = model(word1.unsqueeze(0), word2.unsqueeze(0))
+    prediction = model_0(word1.unsqueeze(0), word2.unsqueeze(0))
     print(f"Prediction for '{test_word_pairs.pop(0)}': {prediction.item():.4f}")
