@@ -9,5 +9,5 @@ Cognate classifier: identifies cognates in Spanish and English
 
 
 AI Image Detection: identifies whether an image is AI generated or not
-* Uses a pre-labeled kaggle dataset to train a model that identifies AI images to 99% accuracy
+* Uses a pre-labeled kaggle dataset to train a model that identifies AI images
 * Uses 4 layers of conv2d layers
